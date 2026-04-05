@@ -1,0 +1,17 @@
+[build]
+builder = "dockerfile"
+
+[[services]]
+name = "api"
+dockerfile = "docker/api.Dockerfile"
+
+[services.deploy]
+startCommand = "docker/entrypoint.sh"
+healthcheckPath = "/health"
+
+[[services]]
+name = "worker"
+dockerfile = "docker/worker.Dockerfile"
+
+[services.deploy]
+startCommand = "dramatiq app.workers.tasks"

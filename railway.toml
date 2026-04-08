@@ -1,9 +1,23 @@
-[build]
+[[services]]
+name = "api"
+
+[services.build]
 builder = "dockerfile"
 dockerfilePath = "Dockerfile"
 
-[deploy]
+[services.deploy]
 startCommand = "docker/entrypoint.sh"
 healthcheckPath = "/health"
 healthcheckTimeout = 300
+restartPolicyType = "on_failure"
+
+[[services]]
+name = "worker"
+
+[services.build]
+builder = "dockerfile"
+dockerfilePath = "worker.Dockerfile"
+
+[services.deploy]
+startCommand = "celery -A app.workers.broker worker --loglevel=info --concurrency=2"
 restartPolicyType = "on_failure"

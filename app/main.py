@@ -58,6 +58,7 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
 def create_app() -> FastAPI:
     app = FastAPI(
         title="AI Backend Engine",
+        docs="/docs",
         description="Model-agnostic AI job queue",
         version="1.0.0",
         lifespan=lifespan,

@@ -30,7 +30,7 @@ async def create_job(
     await db.commit()
     await db.refresh(job)
 
-    process_job.send(job.id)
+    process_job.delay(job.id)
     logger.info("job_id=%s enqueued", job.id)
 
     return JobCreateResponse.from_orm(job)
